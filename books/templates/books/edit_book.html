@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Book</title>
+    <style>
+        /* General Styling (matching add_book.html) */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header Styling */
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Button Styling */
+        button {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #27ae60;
+        }
+
+        /* Form Styling */
+        form {
+            display: flex;
+            flex-direction: column;
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        form input,
+        form select,
+        form button {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        /* Back link */
+        a {
+            text-decoration: none;
+            color: #3498db;
+            font-size: 14px;
+            margin-top: 20px;
+            display: inline-block;
+            font-weight: bold;  /* Makes the link bold */
+            padding: 5px 10px;  /* Adds padding around the link */
+            border-radius: 5px; /* Adds rounded corners */
+            transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+        }
+
+        /* Highlight the link */
+        a:hover {
+            background-color: #3498db;  /* Background color on hover */
+            color: white;  /* Text color changes on hover */
+        }
+
+        a:active {
+            background-color: #2980b9;  /* Darker background on click */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Book Details</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Save Book</button>
+        </form>
+        <a href="{% url 'book_list' %}">Cancel</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book List</title>
+    <style>
+        /* General Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header Styling */
+        header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            align-items: center;
+            flex-wrap: wrap;  /* Allow for responsive layout */
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .add-record-btn {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input {
+            padding: 8px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+        }
+
+        .search-btn {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+
+        /* Table Styling */
+        .book-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            margin-top: 20px;
+        }
+
+        .book-table th, .book-table td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .book-table th {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .sort-icon {
+            cursor: pointer;
+        }
+
+        /* Buttons */
+        .edit-btn, .delete-btn {
+            padding: 6px 12px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .edit-btn {
+            background-color: #f39c12;
+            color: white;
+            margin-right: 10px;
+        }
+
+        .delete-btn {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        /* Pagination Styling */
+        .pagination {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .pagination-btn {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .page-number {
+            margin: 0 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>BOOK LIBRARY</h1> <!-- Added Title -->
+
+            <a href="{% url 'add_book' %}">
+                <button class="add-record-btn">Add Book</button>
+            </a>
+            
+            <!-- Search Form -->
+            <form method="GET" action="{% url 'book_list' %}" class="search-container">
+                <input type="text" name="search" value="{{ request.GET.search }}" placeholder="Search" class="search-input">
+                <button type="submit" class="search-btn">OK</button>
+            </form>
+        </header>
+        
+        <table class="book-table">
+            <thead>
+                <tr>
+                    <th>ID <span class="sort-icon">&#9650;</span></th>
+                    <th>Book Title</th>
+                    <th>Author</th>
+                    <th>Published Year</th>
+                    <th>Rating</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in books %}
+                <tr>
+                    <td>{{ book.id }}</td>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.author }}</td>
+                    <td>{{ book.published_year }}</td>
+                    <td>
+                        <!-- Rating as number -->
+                        <span>{{ book.rating }}/5</span>
+                    </td>
+                    <td>
+                        <!-- Edit button -->
+                        <a href="{% url 'edit_book' book.pk %}">
+                            <button class="edit-btn">Edit</button>
+                        </a>
+                        
+                        <!-- Delete button -->
+                        <a href="{% url 'delete_book' book.pk %}">
+                            <button class="delete-btn">Delete</button>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="pagination">
+            <button class="pagination-btn">Previous</button>
+            <span class="page-number">1</span>
+            <button class="pagination-btn">Next</button>
+        </div>
+    </div>
+</body>
+</html>
